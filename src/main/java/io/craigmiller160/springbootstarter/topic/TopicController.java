@@ -1,9 +1,11 @@
 package io.craigmiller160.springbootstarter.topic;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,11 +36,13 @@ public class TopicController {
         return topicService.addTopic(topic);
     }
 
-    public Topic updateTopic(String id, Topic topic) {
+    @PutMapping("/topics/{id}")
+    public Topic updateTopic(@PathVariable String id, @RequestBody Topic topic) {
         return topicService.updateTopic(id, topic);
     }
 
-    public Topic deleteTopic(String id) {
+    @DeleteMapping("/topics/{id}")
+    public Topic deleteTopic(@PathVariable String id) {
         return topicService.deleteTopic(id);
     }
 

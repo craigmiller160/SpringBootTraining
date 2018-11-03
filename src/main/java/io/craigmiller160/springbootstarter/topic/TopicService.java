@@ -31,21 +31,20 @@ public class TopicService {
         return topic;
     }
 
-    public Topic updateTopic(String id, Topic topic) {
-        int matchIndex = IntStream.range(0, topics.size())
+    private int findTopicIndex(String id) {
+        return IntStream.range(0, topics.size())
                 .filter(index -> topics.get(index).getId().equals(id))
                 .findFirst()
                 .getAsInt();
-        topics.set(matchIndex, topic);
+    }
+
+    public Topic updateTopic(String id, Topic topic) {
+        topics.set(findTopicIndex(id), topic);
         return topic;
     }
 
     public Topic deleteTopic(String id) {
-        int matchIndex = IntStream.range(0, topics.size())
-                .filter(index -> topics.get(index).getId().equals(id))
-                .findFirst()
-                .getAsInt();
-        return topics.remove(matchIndex);
+        return topics.remove(findTopicIndex(id));
     }
 
 }
