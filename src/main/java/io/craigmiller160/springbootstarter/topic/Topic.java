@@ -1,9 +1,13 @@
 package io.craigmiller160.springbootstarter.topic;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
 public class Topic {
 
+    @Id
     private String id;
     private String name;
     private String description;
