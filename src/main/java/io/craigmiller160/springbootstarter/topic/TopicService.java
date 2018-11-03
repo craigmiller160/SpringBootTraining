@@ -43,8 +43,9 @@ public class TopicService {
 
     @Transactional
     public Optional<Topic> updateTopic(String id, Topic topic) {
+        topic.setId(id);
         topic = topicRepository.save(topic);
-        return Optional.of(topic); //TODO this doesn't distinguish between something new or something updated
+        return Optional.of(topic);
     }
 
     @Transactional

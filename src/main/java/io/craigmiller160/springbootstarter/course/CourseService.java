@@ -1,5 +1,6 @@
 package io.craigmiller160.springbootstarter.course;
 
+import io.craigmiller160.springbootstarter.topic.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,26 +29,29 @@ public class CourseService {
     }
 
     @Transactional
-    public Optional<Course> getCourse(String id) {
-        return courseRepository.findById(id);
+    public Optional<Course> getCourse(String topicId, String courseId) {
+        return courseRepository.findByTopicIdAndId(topicId, courseId);
     }
 
     @Transactional
-    public Optional<Course> addCourse(Course course) {
+    public Optional<Course> addCourse(String topicId, Course course) {
+        course.setTopic(new Topic(topicId, "", ""));
         course = courseRepository.save(course); //TODO this creates and updates together... wtf...
         return Optional.of(course);
     }
 
     @Transactional
-    public Optional<Course> updateCourse(String id, Course course) {
+    public Optional<Course> updateCourse(String topicId, String courseId, Course course) {
+        course.setTopic(new Topic(topicId, "", ""));
+        course.setId(courseId);
         course = courseRepository.save(course);
         return Optional.of(course); //TODO this doesn't distinguish between something new or something updated
     }
 
     @Transactional
-    public Optional<Course> deleteCourse(String id) {
-        Optional<Course> course = courseRepository.findById(id);
-        courseRepository.deleteById(id); //TODO don't like how this doesn't return anything...
+    public Optional<Course> deleteCourse(String topicId, String courseId) {
+        Optional<Course> course = courseRepository.findByTopicIdAndId(topicId, courseId);
+        courseRepository.deleteByTopicIdAndId(topicId, courseId); //TODO don't like how this doesn't return anything...
         return course;
     }
 

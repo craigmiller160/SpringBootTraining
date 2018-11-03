@@ -1,6 +1,5 @@
 package io.craigmiller160.springbootstarter.course;
 
-import io.craigmiller160.springbootstarter.topic.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,31 +30,29 @@ public class CourseController {
     }
 
     @GetMapping("/topics/{topicId}/courses/{courseId}")
-    public ResponseEntity<Course> getCourse(@PathVariable String courseId) {
-        return courseService.getCourse(courseId)
+    public ResponseEntity<Course> getCourse(@PathVariable String topicId, @PathVariable String courseId) {
+        return courseService.getCourse(topicId, courseId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/topics/{topicId}/courses")
     public ResponseEntity<Course> addCourse(@PathVariable String topicId, @RequestBody Course course) {
-        course.setTopic(new Topic(topicId, "", ""));
-        return courseService.addCourse(course)
+        return courseService.addCourse(topicId, course)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new RuntimeException("Error when trying to add topic"));
     }
 
     @PutMapping("/topics/{topicId}/courses/{courseId}")
     public ResponseEntity<Course> updateCourse(@PathVariable String topicId, @PathVariable String courseId, @RequestBody Course course) {
-        course.setTopic(new Topic(topicId, "", ""));
-        return courseService.updateCourse(courseId, course)
+        return courseService.updateCourse(topicId, courseId, course)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/topics/{topicId}/courses/{courseId}")
-    public ResponseEntity<Course> deleteCourse(@PathVariable String courseId) {
-        return courseService.deleteCourse(courseId)
+    public ResponseEntity<Course> deleteCourse(@PathVariable String topicId, @PathVariable String courseId) {
+        return courseService.deleteCourse(topicId, courseId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
