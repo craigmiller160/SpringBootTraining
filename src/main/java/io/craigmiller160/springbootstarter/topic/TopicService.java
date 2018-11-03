@@ -11,6 +11,8 @@ import java.util.stream.StreamSupport;
 @Service
 public class TopicService {
 
+    //TODO add spring transaction handling to these methods
+
     private final TopicRepository topicRepository;
 
     @Autowired
