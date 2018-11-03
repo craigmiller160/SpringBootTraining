@@ -2,18 +2,18 @@ package io.craigmiller160.springbootstarter.topic;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 @Service
 public class TopicService {
 
-    private final List<Topic> topics = Arrays.asList(
+    private final List<Topic> topics = new ArrayList<>(List.of(
             new Topic("spring", "Spring Framework", "Spring Framework Description"),
             new Topic("java", "Core Java", "Core Java Description"),
             new Topic("javascript", "JavaScript", "JavaScript Description")
-    );
+    ));
 
     public List<Topic> getAllTopics() {
         return topics;
