@@ -45,9 +45,9 @@ public class TopicService {
     }
 
     public Optional<Topic> deleteTopic(String id) {
-        Optional<Topic> result = topicRepository.findById(id);
+        Optional<Topic> topic = topicRepository.findById(id);
         topicRepository.deleteById(id); //TODO don't like how this doesn't return anything...
-        return result;
+        return topic;
     }
 
 }
