@@ -2,6 +2,7 @@ package io.craigmiller160.springbootstarter.topic;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,6 +20,23 @@ public class TopicController {
     @GetMapping("/topics")
     public List<Topic> getAllTopics() {
         return topicService.getAllTopics();
+    }
+
+    @GetMapping("/topics/{id}")
+    public Topic getTopic(@PathVariable String id) {
+        return topicService.getTopic(id);
+    }
+
+    public Topic addTopic(Topic topic) {
+        return topicService.addTopic(topic);
+    }
+
+    public Topic updateTopic(String id, Topic topic) {
+        return topicService.updateTopic(id, topic);
+    }
+
+    public Topic deleteTopic(String id) {
+        return topicService.deleteTopic(id);
     }
 
 }
