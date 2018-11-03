@@ -1,6 +1,7 @@
 package io.craigmiller160.springbootstarter.topic;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,28 +23,38 @@ public class TopicController {
     }
 
     @GetMapping("/topics")
-    public List<Topic> getAllTopics() {
-        return topicService.getAllTopics();
+    public ResponseEntity<List<Topic>> getAllTopics() {
+        return topicService.getAllTopics()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.noContent().build());
     }
 
     @GetMapping("/topics/{id}")
-    public Topic getTopic(@PathVariable String id) {
-        return topicService.getTopic(id);
+    public ResponseEntity<Topic> getTopic(@PathVariable String id) {
+        return topicService.getTopic(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/topics")
-    public Topic addTopic(@RequestBody Topic topic) {
-        return topicService.addTopic(topic);
+    public ResponseEntity<Topic> addTopic(@RequestBody Topic topic) {
+        return topicService.addTopic(topic)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new RuntimeException("Error when trying to add topic"));
     }
 
     @PutMapping("/topics/{id}")
-    public Topic updateTopic(@PathVariable String id, @RequestBody Topic topic) {
-        return topicService.updateTopic(id, topic);
+    public ResponseEntity<Topic> updateTopic(@PathVariable String id, @RequestBody Topic topic) {
+        return topicService.updateTopic(id, topic)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/topics/{id}")
-    public Topic deleteTopic(@PathVariable String id) {
-        return topicService.deleteTopic(id);
+    public ResponseEntity<Topic> deleteTopic(@PathVariable String id) {
+        return topicService.deleteTopic(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 }

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @Service
@@ -15,36 +16,47 @@ public class TopicService {
             new Topic("javascript", "JavaScript", "JavaScript Description")
     ));
 
-    public List<Topic> getAllTopics() {
-        return topics;
+    public Optional<List<Topic>> getAllTopics() {
+        if (topics.size() == 0) {
+            return Optional.empty();
+        }
+        return Optional.of(topics);
     }
 
-    public Topic getTopic(String id) {
+    public Optional<Topic> getTopic(String id) {
         return topics.stream()
                 .filter(topic -> topic.getId().equals(id))
-                .findFirst()
-                .get();
+                .findFirst();
     }
 
-    public Topic addTopic(Topic topic) {
+    public Optional<Topic> addTopic(Topic topic) {
         topics.add(topic);
-        return topic;
+        return Optional.of(topic);
     }
 
     private int findTopicIndex(String id) {
         return IntStream.range(0, topics.size())
                 .filter(index -> topics.get(index).getId().equals(id))
                 .findFirst()
-                .getAsInt();
+                .orElse(-1);
     }
 
-    public Topic updateTopic(String id, Topic topic) {
-        topics.set(findTopicIndex(id), topic);
-        return topic;
+    public Optional<Topic> updateTopic(String id, Topic topic) {
+        int topicIndex = findTopicIndex(id);
+        if (topicIndex == -1) {
+            return Optional.empty();
+        }
+        topics.set(topicIndex, topic);
+        return Optional.of(topic);
     }
 
-    public Topic deleteTopic(String id) {
-        return topics.remove(findTopicIndex(id));
+    public Optional<Topic> deleteTopic(String id) {
+        int topicIndex = findTopicIndex(id);
+        if (topicIndex == -1) {
+            return Optional.empty();
+        }
+        Topic removedTopic = topics.remove(topicIndex);
+        return Optional.of(removedTopic);
     }
 
 }
