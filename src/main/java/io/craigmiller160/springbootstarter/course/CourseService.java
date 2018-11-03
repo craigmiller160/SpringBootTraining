@@ -1,14 +1,10 @@
 package io.craigmiller160.springbootstarter.course;
 
-import io.craigmiller160.springbootstarter.topic.Topic;
-import io.craigmiller160.springbootstarter.topic.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class CourseService {
@@ -22,9 +18,8 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public Optional<List<Course>> getAllCourses() {
-        List<Course> courses = StreamSupport.stream(courseRepository.findAll().spliterator(),  false)
-                .collect(Collectors.toList());
+    public Optional<List<Course>> getAllCourses(String topicId) {
+        List<Course> courses = courseRepository.findByTopicId(topicId);
 
         if (courses.size() == 0) {
             return Optional.empty();
