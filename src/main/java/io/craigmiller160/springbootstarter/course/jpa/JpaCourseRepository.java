@@ -1,11 +1,12 @@
-package io.craigmiller160.springbootstarter.course;
+package io.craigmiller160.springbootstarter.course.jpa;
 
+import io.craigmiller160.springbootstarter.course.Course;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface CourseRepository extends CrudRepository<Course,String> {
+public interface JpaCourseRepository extends CrudRepository<Course,String> {
 
     List<Course> findByTopicId(String topicId);
 
