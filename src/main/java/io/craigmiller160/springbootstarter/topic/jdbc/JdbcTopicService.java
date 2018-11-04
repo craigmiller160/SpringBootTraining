@@ -75,14 +75,11 @@ public class JdbcTopicService implements TopicService {
     @Transactional
     @Override
     public Optional<Topic> deleteTopic(String topicId) {
-        List<Topic> topics = jdbcTemplate.query(SELECT_ONE_TOPIC, new Object[]{topicId}, new TopicRowMapper());
-        if (topics.size() == 0) {
-            return Optional.empty();
-        }
+        Optional<Topic> topic = getTopic(topicId);
         int result = jdbcTemplate.update(DELETE_TOPIC, topicId);
         if (result == 0) {
             return Optional.empty();
         }
-        return Optional.of(topics.get(0));
+        return topic;
     }
 }
