@@ -1,22 +1,11 @@
 package io.craigmiller160.springbootstarter.topic;
 
-import org.springframework.jdbc.core.RowMapper;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
 public class Topic {
-
-    public static RowMapper<Topic> ROW_MAPPER = (rs, rowNum) -> {
-        Topic topic = new Topic();
-        topic.setId(rs.getString("id"));
-        topic.setName(rs.getString("name"));
-        topic.setDescription(rs.getString("description"));
-
-        return topic;
-    };
 
     @Id
     private String id;

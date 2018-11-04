@@ -29,7 +29,7 @@ public class JdbcTopicService implements TopicService {
     @Transactional
     @Override
     public Optional<List<Topic>> getAllTopics() {
-        List<Topic> topics = jdbcTemplate.query(SELECT_ALL_TOPICS, Topic.ROW_MAPPER);
+        List<Topic> topics = jdbcTemplate.query(SELECT_ALL_TOPICS, new TopicRowMapper());
         if (topics.size() == 0){
             return Optional.empty();
         }
@@ -39,7 +39,7 @@ public class JdbcTopicService implements TopicService {
     @Transactional
     @Override
     public Optional<Topic> getTopic(String topicId) {
-        List<Topic> topics = jdbcTemplate.query(SELECT_ONE_TOPIC, new Object[] {topicId}, Topic.ROW_MAPPER);
+        List<Topic> topics = jdbcTemplate.query(SELECT_ONE_TOPIC, new Object[] {topicId}, new TopicRowMapper());
         if (topics.size() == 0) {
             return Optional.empty();
         }
@@ -75,7 +75,7 @@ public class JdbcTopicService implements TopicService {
     @Transactional
     @Override
     public Optional<Topic> deleteTopic(String topicId) {
-        List<Topic> topics = jdbcTemplate.query(SELECT_ONE_TOPIC, new Object[]{topicId}, Topic.ROW_MAPPER);
+        List<Topic> topics = jdbcTemplate.query(SELECT_ONE_TOPIC, new Object[]{topicId}, new TopicRowMapper());
         if (topics.size() == 0) {
             return Optional.empty();
         }
