@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service
+//@Service
 public class JpaTopicService implements TopicService {
 
     private final JpaTopicRepository topicRepository;
